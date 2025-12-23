@@ -599,11 +599,6 @@
     <p class="hero-concept">"데이터는 사랑을 싣고" — 숫자로 증명하는 우리의 헌신</p>
     <div class="scroll-hint">SCROLL</div>
 
-    <button id="playMusic">🎵 음악 시작</button>
-
-<audio id="bgm" loop>
-  <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
-</audio>
 
   </header>
 
@@ -855,16 +850,13 @@
     }
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll();
-    <script>
-  const btn = document.getElementById('playMusic');
-  const bgm = document.getElementById('bgm');
 
-  btn.addEventListener('click', () => {
-    bgm.play();
-    btn.style.display = 'none';
-  });
-</script>
+
 
   </script>
+  <audio autoplay loop>
+  <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
+</audio>
+
 </body>
 </html>
