@@ -598,7 +598,9 @@
     <p class="hero-subtitle">THE AWARDS</p>
     <p class="hero-concept">"데이터는 사랑을 싣고" — 숫자로 증명하는 우리의 헌신</p>
     <div class="scroll-hint">SCROLL</div>
-
+<audio id="bgm" loop>
+  <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
+</audio>
 
   </header>
 
@@ -854,9 +856,21 @@
 
 
   </script>
-  <audio autoplay loop>
-  <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
-</audio>
+<script>
+  const bgm = document.getElementById('bgm');
+
+  const startMusic = () => {
+    bgm.volume = 0.6;
+    bgm.play();
+    window.removeEventListener('click', startMusic);
+    window.removeEventListener('touchstart', startMusic);
+    window.removeEventListener('scroll', startMusic);
+  };
+
+  window.addEventListener('click', startMusic);
+  window.addEventListener('touchstart', startMusic);
+  window.addEventListener('scroll', startMusic);
+</script>
 
 </body>
 </html>
