@@ -11,17 +11,34 @@
       --white: #f5f5f5;
       --red: #ff2d2d;
       --green: #00ff6a;
+      --gold: #ffd700;
       --gray: #888;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html, body {
+      overflow: hidden;
+      height: 100%;
+    }
 
     body {
       background: var(--black);
       color: var(--white);
       font-family: 'Noto Sans KR', sans-serif;
-      overflow-x: hidden;
-      cursor: crosshair;
+    }
+
+    .horizontal-container {
+      display: flex;
+      height: 100vh;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+
+    .horizontal-container::-webkit-scrollbar {
+      display: none;
     }
 
     body::before {
@@ -35,22 +52,30 @@
       z-index: 9999;
     }
 
-    /* Hero */
-    .hero {
-      min-height: 100vh;
+    /* Full screen sections */
+    .page {
+      min-width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
       padding: 2rem;
       position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
     }
 
     .hero-badge {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.4em;
+      font-size: 1rem;
+      letter-spacing: 0.5em;
       color: var(--gray);
       margin-bottom: 2rem;
       opacity: 0;
@@ -59,15 +84,15 @@
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 18vw, 14rem);
-      line-height: 0.85;
+      font-size: clamp(4rem, 18vw, 12rem);
+      line-height: 0.9;
       opacity: 0;
       animation: slideUp 1s ease-out 0.3s forwards;
     }
 
     .hero-title .year {
       display: block;
-      font-size: 0.3em;
+      font-size: 0.35em;
       letter-spacing: 0.5em;
       color: var(--gray);
       margin-bottom: 0.5rem;
@@ -83,20 +108,12 @@
 
     .hero-subtitle {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      letter-spacing: 0.3em;
-      margin-top: 1rem;
+      font-size: clamp(1.2rem, 4vw, 2.5rem);
+      letter-spacing: 0.4em;
+      margin-top: 1.5rem;
+      color: var(--white);
       opacity: 0;
       animation: fadeIn 1s ease-out 0.6s forwards;
-    }
-
-    .hero-concept {
-      font-size: 0.85rem;
-      color: var(--gray);
-      margin-top: 3rem;
-      letter-spacing: 0.1em;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.9s forwards;
     }
 
     .scroll-hint {
@@ -115,428 +132,369 @@
       display: block;
       text-align: center;
       margin-top: 0.5rem;
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       animation: bounce 2s infinite;
     }
 
-    /* Sections */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+    /* Video Section */
+    .video-section {
+      background: #000;
     }
 
-    .section-header {
-      margin-bottom: 3rem;
-      border-bottom: 1px solid #222;
-      padding-bottom: 2rem;
-    }
-
-    .section-label {
+    .video-container {
+      width: 90%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+      background: #111;
+      border: 1px solid #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.8rem;
+      font-size: 1.5rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+    }
+
+    /* Quiz Section */
+    .quiz-section {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .quiz-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
       letter-spacing: 0.4em;
       color: var(--red);
-      margin-bottom: 0.5rem;
+      margin-bottom: 2rem;
     }
 
-    .section-title {
+    .quiz-question {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      letter-spacing: 0.05em;
-      line-height: 1;
+      font-size: clamp(2rem, 8vw, 5rem);
+      line-height: 1.2;
+      max-width: 900px;
     }
 
-    .section-subtitle {
+    .quiz-hint {
+      margin-top: 3rem;
       font-size: 0.9rem;
       color: var(--gray);
-      margin-top: 1rem;
-      letter-spacing: 0.05em;
     }
 
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+    .quiz-answer {
+      display: none;
+      margin-top: 2rem;
     }
 
-    .stat-card {
-      background: linear-gradient(135deg, #111 0%, #0a0a0a 100%);
-      border: 1px solid #222;
-      padding: 2rem;
-      position: relative;
-      transition: all 0.4s ease;
+    .quiz-answer.show {
+      display: block;
+      animation: revealAnswer 0.8s ease-out forwards;
     }
 
-    .stat-card:hover {
-      border-color: var(--green);
-      transform: translateY(-5px);
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 4px; height: 100%;
-      background: linear-gradient(to bottom, var(--red), var(--green));
-    }
-
-    .stat-label {
+    .quiz-answer-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--gray);
-      margin-bottom: 1rem;
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
     }
 
-    .stat-name {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-role {
-      font-size: 0.8rem;
+    .quiz-answer-sub {
+      font-size: 1.2rem;
       color: var(--green);
-      margin-bottom: 0.8rem;
+      margin-top: 1rem;
     }
 
-    .stat-value {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      background: linear-gradient(135deg, var(--white), var(--gray));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-unit { font-size: 1rem; color: var(--gray); }
-
-    .stat-desc {
-      font-size: 0.75rem;
-      color: var(--gray);
-      margin-top: 0.8rem;
-      line-height: 1.5;
-    }
-
-    /* Chart */
+    /* Chart Section */
     .chart-section {
-      background: #0d0d0d;
-      margin: 0;
-      padding: 6rem 2rem;
+      background: linear-gradient(180deg, #0a0a0a 0%, #0d0d0d 100%);
+      padding: 2rem;
     }
 
-    .chart-section .section-header,
-    .chart-section .chart-list,
-    .chart-section .chart-keyword {
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
     }
 
-    .chart-list { list-style: none; }
+    .chart-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .chart-list {
+      list-style: none;
+    }
 
     .chart-item {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1.5rem;
       padding: 1.5rem 0;
-      border-bottom: 1px solid #1a1a1a;
-      transition: all 0.3s ease;
-    }
-
-    .chart-item:hover {
-      padding-left: 1rem;
-      background: linear-gradient(90deg, rgba(0,255,106,0.05) 0%, transparent 100%);
+      border-bottom: 1px solid #222;
     }
 
     .chart-rank {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      min-width: 80px;
+      font-size: 2.5rem;
+      min-width: 60px;
       color: var(--gray);
     }
 
-    .chart-rank.top { color: var(--red); }
+    .chart-rank.top { color: var(--gold); }
+
     .chart-info { flex: 1; }
 
-    .chart-title {
-      font-size: 1.3rem;
+    .chart-song {
+      font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: 0.3rem;
     }
 
-    .chart-plays { font-size: 0.8rem; color: var(--green); }
+    .chart-plays {
+      font-size: 0.85rem;
+      color: var(--green);
+    }
 
-    .chart-bar { width: 150px; height: 4px; background: #222; }
+    .chart-bar {
+      width: 120px;
+      height: 4px;
+      background: #222;
+    }
 
     .chart-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--red), var(--green));
     }
 
-    @media (max-width: 600px) {
-      .chart-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
-      }
-      .chart-rank {
-        font-size: 2rem;
-        min-width: auto;
-      }
-      .chart-info {
-        width: 100%;
-      }
-      .chart-title {
-        font-size: 1.1rem;
-      }
-      .chart-bar {
-        width: 100%;
-        max-width: 200px;
-      }
-    }
-
     .chart-keyword {
-      margin-top: 4rem;
-      padding: 3rem 4rem;
+      margin-top: 3rem;
+      padding: 2rem;
       background: linear-gradient(135deg, #1a0505 0%, #0a0a0a 100%);
       border: 1px solid #333;
-      display: block;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
       text-align: center;
     }
 
     .chart-keyword-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
+      font-size: 0.8rem;
       color: var(--gray);
+      letter-spacing: 0.2em;
       margin-bottom: 0.5rem;
     }
 
     .chart-keyword-word {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 6rem;
+      font-size: 4rem;
       color: var(--red);
-      letter-spacing: 0.2em;
       text-shadow: 0 0 30px rgba(255, 45, 45, 0.5);
     }
 
-    @media (max-width: 600px) {
-      .chart-keyword {
-        padding: 2rem;
-        max-width: 90%;
-      }
-      .chart-keyword-word {
-        font-size: 4rem;
-        letter-spacing: 0.1em;
-      }
-      .chart-keyword-label {
-        font-size: 0.65rem;
-      }
+    /* Awards Intro */
+    .awards-intro {
+      text-align: center;
+      background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
     }
 
-    .chart-keyword-desc {
-      font-size: 0.85rem;
+    .awards-intro-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.5em;
       color: var(--gray);
-      margin-top: 0.5rem;
+      margin-bottom: 1rem;
     }
 
-    /* Awards */
-    .awards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+    .awards-intro-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 15vw, 10rem);
+      background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
     }
 
-    .award-card {
-      background: #111;
-      border: 1px solid #222;
-      padding: 1.5rem;
-      transition: all 0.4s ease;
+    /* Award Page */
+    .award-page {
+      text-align: center;
+      background: radial-gradient(circle at center, #111 0%, #0a0a0a 100%);
     }
 
-    .award-card:hover { border-color: var(--red); }
-    .award-emoji { font-size: 2rem; margin-bottom: 0.8rem; }
+    .award-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
 
     .award-category {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      color: var(--red);
-      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.4em;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
     }
 
     .award-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.8rem;
-    }
-
-    .award-winner {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--green);
-      margin-bottom: 0.3rem;
-    }
-
-    .award-reason {
-      font-size: 0.8rem;
-      color: var(--gray);
-      line-height: 1.5;
-      margin-bottom: 0.8rem;
-    }
-
-    .award-prize {
-      display: inline-block;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--white);
-      background: #222;
-      padding: 0.4rem 0.8rem;
-    }
-
-    /* Timeline */
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--red), var(--green), var(--gray));
-    }
-
-    .timeline-item {
-      padding: 2rem 0;
-      padding-left: 2rem;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2rem; top: 2.5rem;
-      width: 10px; height: 10px;
-      background: var(--black);
-      border: 2px solid var(--green);
-      transform: translateX(-4px);
-    }
-
-    .timeline-step {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      color: var(--red);
-      margin-bottom: 0.3rem;
-    }
-
-    .timeline-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.3rem;
-    }
-
-    .timeline-duration {
-      font-size: 0.8rem;
-      color: var(--green);
-      margin-bottom: 0.8rem;
-    }
-
-    .timeline-desc {
-      font-size: 0.85rem;
-      color: var(--gray);
-      line-height: 1.7;
-    }
-
-    .timeline-desc li {
-      margin-bottom: 0.3rem;
-      list-style: none;
-      padding-left: 1.2rem;
-      position: relative;
-    }
-
-    .timeline-desc li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: #444;
-    }
-
-    /* Budget */
-    .budget-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: #222;
-      border: 1px solid #222;
-      max-width: 100%;
-    }
-
-    @media (max-width: 600px) {
-      .budget-grid { grid-template-columns: 1fr; }
-    }
-
-    .budget-item {
-      background: var(--black);
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .budget-label {
-      font-size: 0.75rem;
-      color: var(--gray);
-      letter-spacing: 0.15em;
-      margin-bottom: 0.8rem;
-    }
-
-    .budget-value {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-    }
-
-    .budget-total { margin-top: 1px; max-width: 100%; }
-
-    .budget-total .budget-item {
-      background: linear-gradient(135deg, #1a0505 0%, #051a0a 100%);
-    }
-
-    .budget-total .budget-value {
-      font-size: 3rem;
-      background: linear-gradient(135deg, var(--red), var(--green));
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      background: linear-gradient(135deg, var(--gold), #fff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      margin-bottom: 2rem;
+    }
+
+    .award-winner {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .award-winner-multi {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--green);
+      line-height: 1.8;
+    }
+
+    .award-description {
+      font-size: 1rem;
+      color: var(--gray);
+      margin-top: 1rem;
+      max-width: 500px;
+    }
+
+    .award-pending {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--gold);
+      animation: pulse 2s infinite;
+    }
+
+    .award-stats {
+      margin-top: 1.5rem;
+      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    .award-sub {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--green);
+    }
+
+    /* Award reveal interaction */
+    .award-page {
+      cursor: pointer;
+    }
+
+    .award-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+      pointer-events: none;
+    }
+
+    .award-page.revealed .award-reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .award-hint {
+      position: absolute;
+      bottom: 3rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+      transition: opacity 0.3s ease;
+    }
+
+    .award-page.revealed .award-hint {
+      opacity: 0;
+    }
+
+    /* Gift Exchange */
+    .gift-section {
+      background: linear-gradient(180deg, #0a0a0a 0%, #0d0505 100%);
+    }
+
+    .gift-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .gift-subtitle {
+      font-size: 0.9rem;
+      color: var(--gray);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .bingo-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .bingo-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+    }
+
+    .bingo-cell {
+      aspect-ratio: 1;
+      background: #111;
+      border: 1px solid #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(0.6rem, 2vw, 0.9rem);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      padding: 0.3rem;
+    }
+
+    .bingo-cell:hover {
+      border-color: var(--green);
+      background: #1a1a1a;
+    }
+
+    .bingo-cell.selected {
+      background: linear-gradient(135deg, rgba(255,45,45,0.3), rgba(0,255,106,0.3));
+      border-color: var(--gold);
+      color: var(--gray);
+      text-decoration: line-through;
+      opacity: 0.6;
     }
 
     /* Footer */
-    footer {
+    .footer-page {
       text-align: center;
-      padding: 6rem 2rem;
-      border-top: 1px solid #222;
     }
 
     .footer-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2rem, 8vw, 5rem);
-      letter-spacing: 0.1em;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .footer-dresscode {
       display: inline-block;
       padding: 1rem 2rem;
       border: 1px solid #333;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .footer-dresscode span {
@@ -550,19 +508,13 @@
     .footer-tagline {
       font-size: 1rem;
       color: var(--gray);
-      letter-spacing: 0.1em;
-    }
-
-    .footer-date {
-      margin-top: 2rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.2em;
-      color: var(--gray);
     }
 
     /* Animations */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(50px); }
@@ -574,21 +526,65 @@
       50% { transform: translateY(10px); }
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes revealAnswer {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Page indicator */
+    .page-indicator {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .page-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .page-dot.active {
+      background: var(--green);
+      width: 20px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .page-indicator { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <header class="hero">
+  <audio id="bgm" loop>
+    <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="page-indicator" id="pageIndicator"></div>
+
+  <div class="horizontal-container" id="horizontalContainer">
+
+  <!-- 1. Hero -->
+  <section class="page hero">
     <p class="hero-badge">R45 WORSHIP TEAM PRESENTS</p>
     <h1 class="hero-title">
       <span class="year">2025</span>
@@ -596,240 +592,202 @@
       RECAP
     </h1>
     <p class="hero-subtitle">THE AWARDS</p>
-    <p class="hero-concept">"데이터는 사랑을 싣고" — 숫자로 증명하는 우리의 헌신</p>
     <div class="scroll-hint">SCROLL</div>
-<audio id="bgm" loop>
-  <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
-</audio>
+  </section>
 
-  </header>
-
-  <section>
-    <div class="section-header reveal">
-      <p class="section-label">CHAPTER 01</p>
-      <h2 class="section-title">ATTENDANCE STATS</h2>
-      <p class="section-subtitle">출석왕 — 1년 52주 중 가장 성실했던 멤버들</p>
+  <!-- 2. Video -->
+  <section class="page video-section">
+    <div class="video-container">
+      VIDEO PLACEHOLDER
     </div>
-    <div class="stats-grid">
-      <div class="stat-card reveal">
-        <p class="stat-label">R45의 철인 — 통합 출석 1위</p>
-        <p class="stat-name">강혜령</p>
-        <p class="stat-role">Bass</p>
-        <p class="stat-value">33<span class="stat-unit">주</span></p>
-        <p class="stat-desc">"1년 52주 중 33번의 주일, 그녀의 베이스는 멈추지 않았습니다."</p>
-      </div>
-      <div class="stat-card reveal">
-        <p class="stat-label">2부의 수호천사</p>
-        <p class="stat-name">김종진</p>
-        <p class="stat-role">Drums</p>
-        <p class="stat-value">26<span class="stat-unit">회</span></p>
-        <p class="stat-desc">"2부 예배의 심장!"</p>
-      </div>
-      <div class="stat-card reveal">
-        <p class="stat-label">2부의 수호천사</p>
-        <p class="stat-name">함상미</p>
-        <p class="stat-role">Violin</p>
-        <p class="stat-value">24<span class="stat-unit">회</span></p>
-        <p class="stat-desc">"유일한 바이올린으로 예배의 품격을 높여주셨습니다."</p>
-      </div>
-      <div class="stat-card reveal">
-        <p class="stat-label">3부의 수호천사</p>
-        <p class="stat-name">지성현</p>
-        <p class="stat-role">Electric Guitar</p>
-        <p class="stat-value">27<span class="stat-unit">회</span></p>
-        <p class="stat-desc">"3부 예배 일렉 사운드의 지배자. 그의 손가락 지문은 안녕하십니까?"</p>
-      </div>
-      <div class="stat-card reveal">
-        <p class="stat-label">최다 등판 보컬</p>
-        <p class="stat-name">박진</p>
-        <p class="stat-role">Vocal</p>
-        <p class="stat-value">19<span class="stat-unit">회</span></p>
-        <p class="stat-desc">"가장 많이 마이크를 잡은 당신, R45의 목소리입니다."</p>
+  </section>
+
+  <!-- 3. Quiz -->
+  <section class="page quiz-section" id="quizSection">
+    <p class="quiz-label">QUIZ TIME</p>
+    <h2 class="quiz-question">2025년<br>R45가 가장 많이 부른<br>찬양은?</h2>
+    <p class="quiz-hint">화면을 클릭하면 정답이 공개됩니다</p>
+    <div class="quiz-answer" id="quizAnswer">
+      <p class="quiz-answer-title">예수의 이름이 올라가네</p>
+      <p class="quiz-answer-sub">5회 선곡 · R45가 가장 사랑하는 곡</p>
+    </div>
+  </section>
+
+  <!-- 4. Chart -->
+  <section class="page chart-section">
+    <div class="chart-container">
+      <h2 class="chart-title">MUSIC CHART</h2>
+      <ul class="chart-list">
+        <li class="chart-item">
+          <span class="chart-rank top">01</span>
+          <div class="chart-info">
+            <p class="chart-song">예수의 이름이 올라가네</p>
+            <p class="chart-plays">5회 선곡</p>
+          </div>
+          <div class="chart-bar"><div class="chart-bar-fill" style="width: 100%;"></div></div>
+        </li>
+        <li class="chart-item">
+          <span class="chart-rank">02</span>
+          <div class="chart-info">
+            <p class="chart-song">지금은 엘리야 때처럼</p>
+            <p class="chart-plays">4회 선곡</p>
+          </div>
+          <div class="chart-bar"><div class="chart-bar-fill" style="width: 80%;"></div></div>
+        </li>
+        <li class="chart-item">
+          <span class="chart-rank">02</span>
+          <div class="chart-info">
+            <p class="chart-song">Here for You</p>
+            <p class="chart-plays">4회 선곡</p>
+          </div>
+          <div class="chart-bar"><div class="chart-bar-fill" style="width: 80%;"></div></div>
+        </li>
+      </ul>
+      <div class="chart-keyword">
+        <p class="chart-keyword-label">R45의 찬양을 나타내는 한 단어</p>
+        <p class="chart-keyword-word">보혈</p>
       </div>
     </div>
   </section>
 
-  <div class="chart-section">
-    <div class="section-header reveal">
-      <p class="section-label">CHAPTER 02</p>
-      <h2 class="section-title">MUSIC CHART</h2>
-      <p class="section-subtitle">올해의 노래 — 2025년 R45 최다 선곡 베스트 찬양</p>
-    </div>
-    <ul class="chart-list">
-      <li class="chart-item reveal">
-        <span class="chart-rank top">01</span>
-        <div class="chart-info">
-          <p class="chart-title">예수의 이름이 올라가네</p>
-          <p class="chart-plays">5회 선곡 · R45가 가장 사랑하는 곡</p>
-        </div>
-        <div class="chart-bar"><div class="chart-bar-fill" style="width: 100%;"></div></div>
-      </li>
-      <li class="chart-item reveal">
-        <span class="chart-rank">02</span>
-        <div class="chart-info">
-          <p class="chart-title">지금은 엘리야 때처럼</p>
-          <p class="chart-plays">4회 선곡</p>
-        </div>
-        <div class="chart-bar"><div class="chart-bar-fill" style="width: 80%;"></div></div>
-      </li>
-      <li class="chart-item reveal">
-        <span class="chart-rank">02</span>
-        <div class="chart-info">
-          <p class="chart-title">Here for You</p>
-          <p class="chart-plays">4회 선곡</p>
-        </div>
-        <div class="chart-bar"><div class="chart-bar-fill" style="width: 80%;"></div></div>
-      </li>
-    </ul>
-    <div class="chart-keyword reveal">
-      <p class="chart-keyword-label">R45의 찬양을 나타내는 한 단어</p>
-      <p class="chart-keyword-word">보혈</p>
-      <p class="chart-keyword-desc">'보혈' 관련 찬양 압도적 다수 선곡 🩸</p>
-    </div>
-  </div>
+  <!-- 5. Awards Intro -->
+  <section class="page awards-intro">
+    <p class="awards-intro-label">AND NOW</p>
+    <h2 class="awards-intro-title">THE AWARDS</h2>
+  </section>
 
-  <section>
-    <div class="section-header reveal">
-      <p class="section-label">CHAPTER 03</p>
-      <h2 class="section-title">THE AWARDS</h2>
-      <p class="section-subtitle">웃음과 감동이 있는 실명 토크 시상식</p>
+  <!-- 6. 내가 개근할 상인가? -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">🌲</div>
+    <p class="award-category">최다 성실 (개근)</p>
+    <h2 class="award-name">내가 개근할 상인가?</h2>
+    <div class="award-reveal">
+      <p class="award-winner">강혜령</p>
+      <p class="award-description">한결같이 그 자리를 지켜준 R45의 뿌리</p>
+      <div class="award-stats">
+        <p>🎸 총 32회 섬김</p>
+        <p>상반기 17회 · 하반기 15회</p>
+      </div>
     </div>
-    <div class="awards-grid">
-      <div class="award-card reveal">
-        <div class="award-emoji">🌲</div>
-        <p class="award-category">성실</p>
-        <h3 class="award-name">뿌리깊은 나무상</h3>
-        <p class="award-winner">강혜령 (Bass)</p>
-        <p class="award-reason">압도적 출석률 1위(33회). R45를 지탱한 뿌리.</p>
-        <span class="award-prize">백화점 상품권 or 영양제</span>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 7. 기름부음상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">⛽</div>
+    <p class="award-category">장거리 거주자</p>
+    <h2 class="award-name">기름부음상</h2>
+    <div class="award-reveal">
+      <p class="award-winner">함상미</p>
+      <p class="award-description">도로에 기름이 뿌려졌지만,<br>하늘의 기름이 삶을 통해 부어짐을 경험하는 상</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 8. 금쪽이상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">🩹</div>
+    <p class="award-category">고생한 피아노</p>
+    <h2 class="award-name">금쪽이상</h2>
+    <div class="award-reveal">
+      <p class="award-winner">노드피아노</p>
+      <p class="award-description">1년 365일, 때론 투정을 부리듯 아픔을 호소하지만<br>그래도 언제나 그 자리에 금쪽이처럼 자리를 지켰다</p>
+      <p class="award-sub">대리수상: 최향미</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 9. R45 마에스트로상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">🎸</div>
+    <p class="award-category">밴드마스터</p>
+    <h2 class="award-name">R45 마에스트로상</h2>
+    <div class="award-reveal">
+      <p class="award-winner">박상범</p>
+      <p class="award-description">사운드의 중심에서 밴드를 하나로 묶는<br>R45의 마에스트로</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 10. 미라클 모닝상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">🌅</div>
+    <p class="award-category">1부 붙박이팀</p>
+    <h2 class="award-name">미라클 모닝상</h2>
+    <div class="award-reveal">
+      <div class="award-winner-multi">
+        하정인 · 김수아 · 김태완<br>
+        우혜진 · 김미영 · 지강호
       </div>
-      <div class="award-card reveal">
-        <div class="award-emoji">🎻</div>
-        <p class="award-category">헌신</p>
-        <h3 class="award-name">대체불가 멜로디상</h3>
-        <p class="award-winner">함상미 (Violin)</p>
-        <p class="award-reason">2부 24회 출석. 유일한 바이올린으로 예배 품격 상승.</p>
-        <span class="award-prize">고급 핸드크림 or 꽃다발</span>
+      <p class="award-description">새벽이슬 같은 1부를 지킨 기적의 용사들</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 11. 원더우먼상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">👩‍👧</div>
+    <p class="award-category">아기 엄마</p>
+    <h2 class="award-name">원더우먼상</h2>
+    <div class="award-reveal">
+      <div class="award-winner-multi">
+        우혜진 · 박보미<br>
+        김유진 · 백인영
       </div>
-      <div class="award-card reveal">
-        <div class="award-emoji">🎸</div>
-        <p class="award-category">열정</p>
-        <h3 class="award-name">아이언 핑거상</h3>
-        <p class="award-winner">지성현 (E.G)</p>
-        <p class="award-reason">3부 27회 출석. 기타 줄이 끊어져라 연주한 열정.</p>
-        <span class="award-prize">기타 줄 세트 or 손목보호대</span>
+      <p class="award-description">출산을 하고 다시 R45로 돌아온<br>육아와 섬김을 동시에 해내는 영웅들</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 12. 내 귀에 캔디상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">🎧</div>
+    <p class="award-category">음향 엔지니어</p>
+    <h2 class="award-name">내 귀에 캔디상</h2>
+    <div class="award-reveal">
+      <div class="award-winner-multi">
+        김지상 · 서강휘 · 유희상
       </div>
-      <div class="award-card reveal">
-        <div class="award-emoji">📢</div>
-        <p class="award-category">공로</p>
-        <h3 class="award-name">인간 확성기상</h3>
-        <p class="award-winner">김종진 (Leader)</p>
-        <p class="award-reason">드럼 연주 + 카톡방 공지 지분율 80%. R45의 엔진.</p>
-        <span class="award-prize">대용량 목캔디 or 홍삼</span>
-      </div>
-      <div class="award-card reveal">
-        <div class="award-emoji">🙏</div>
-        <p class="award-category">기도</p>
-        <h3 class="award-name">골방 키보드상</h3>
-        <p class="award-winner">진 Elodie</p>
-        <p class="award-reason">카톡방 최장문 기도 1위. 팀의 영적 온도를 높임.</p>
-        <span class="award-prize">핸드크림</span>
-      </div>
-      <div class="award-card reveal">
-        <div class="award-emoji">🤣</div>
-        <p class="award-category">분위기</p>
-        <h3 class="award-name">배꼽 사냥꾼상 (ㅋㅋㅋ상)</h3>
-        <p class="award-winner">김수아</p>
-        <p class="award-reason">'ㅋㅋㅋ' 리액션 1위. 삭막한 단톡방의 비타민.</p>
-        <span class="award-prize">비타민</span>
-      </div>
-      <div class="award-card reveal">
-        <div class="award-emoji">🩹</div>
-        <p class="award-category">특별</p>
-        <h3 class="award-name">금쪽이 환자상</h3>
-        <p class="award-winner">Nord 건반 (대리수상: 최향미)</p>
-        <p class="award-reason">1년 내내 아프다고 칭얼대서 애태움.</p>
-        <span class="award-prize">방수 데일밴드</span>
-      </div>
+      <p class="award-description">하울링 대신 하모니,<br>잡음 대신 은혜를 선물하는 팀</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 13. 천국 5G 개통상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">📡</div>
+    <p class="award-category">최다 중보자</p>
+    <h2 class="award-name">천국 5G 개통상</h2>
+    <div class="award-reveal">
+      <p class="award-winner">박진</p>
+      <p class="award-description">기도로 중보하는 R45의 기도 용사</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 14. 예수님 붕어빵상 -->
+  <section class="page award-page" data-award>
+    <div class="award-emoji">🏆</div>
+    <p class="award-category">설문 1위 (감사)</p>
+    <h2 class="award-name">예수님 붕어빵상</h2>
+    <div class="award-reveal">
+      <p class="award-pending">? ? ?</p>
+      <p class="award-description">설문 후 발표</p>
+    </div>
+    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
+  </section>
+
+  <!-- 15. Gift Exchange -->
+  <section class="page gift-section">
+    <h2 class="gift-title">GIFT EXCHANGE</h2>
+    <p class="gift-subtitle">키워드를 선택하세요 · 선택된 키워드는 흐려집니다</p>
+    <div class="bingo-grid" id="bingoGrid">
+      <!-- 더미 데이터 38개 -->
     </div>
   </section>
 
-  <section>
-    <div class="section-header reveal">
-      <p class="section-label">CHAPTER 04</p>
-      <h2 class="section-title">PROGRAM</h2>
-      <p class="section-subtitle">큐시트 — 진행 순서</p>
-    </div>
-    <div class="timeline">
-      <div class="timeline-item reveal">
-        <p class="timeline-step">STEP 01</p>
-        <h3 class="timeline-title">OPENING & RECAP</h3>
-        <p class="timeline-duration">약 15분</p>
-        <ul class="timeline-desc">
-          <li>오프닝 영상 (매트릭스 효과)</li>
-          <li>최다 선곡 TOP 3 공개</li>
-          <li>1위 곡 후렴 떼창!</li>
-        </ul>
-      </div>
-      <div class="timeline-item reveal">
-        <p class="timeline-step">STEP 02</p>
-        <h3 class="timeline-title">AWARDS CEREMONY</h3>
-        <p class="timeline-duration">약 25분</p>
-        <ul class="timeline-desc">
-          <li>수상자 사진 화면에 띄우기</li>
-          <li>금쪽이상 — 슬픈 BGM</li>
-        </ul>
-      </div>
-      <div class="timeline-item reveal">
-        <p class="timeline-step">STEP 03</p>
-        <h3 class="timeline-title">GIFT EXCHANGE</h3>
-        <p class="timeline-duration">약 20분</p>
-        <ul class="timeline-desc">
-          <li>익명 키워드 경매</li>
-          <li>"너의 목소리가 들려"</li>
-        </ul>
-      </div>
-      <div class="timeline-item reveal">
-        <p class="timeline-step">STEP 04</p>
-        <h3 class="timeline-title">CLOSING</h3>
-        <p class="timeline-duration">약 10분</p>
-        <ul class="timeline-desc">
-          <li>2026년 첫 예배 라인업</li>
-          <li>단체사진 촬영</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-header reveal">
-      <p class="section-label">CHAPTER 05</p>
-      <h2 class="section-title">BUDGET</h2>
-      <p class="section-subtitle">예산 계획</p>
-    </div>
-    <div class="budget-grid reveal">
-      <div class="budget-item">
-        <p class="budget-label">시상 및 상품</p>
-        <p class="budget-value">₩90,000</p>
-      </div>
-      <div class="budget-item">
-        <p class="budget-label">데코레이션</p>
-        <p class="budget-value">₩20,000</p>
-      </div>
-      <div class="budget-item">
-        <p class="budget-label">이벤트 경품</p>
-        <p class="budget-value">₩40,000</p>
-      </div>
-    </div>
-    <div class="budget-grid budget-total reveal">
-      <div class="budget-item" style="grid-column: span 3;">
-        <p class="budget-label">TOTAL</p>
-        <p class="budget-value">₩150,000</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
+  <!-- 16. Footer -->
+  <section class="page footer-page">
     <h2 class="footer-logo">R45 RECAP 2025</h2>
     <div class="footer-dresscode">
       <span>DRESS CODE: </span>
@@ -838,39 +796,127 @@
       <span class="green">GREEN</span>
     </div>
     <p class="footer-tagline">"데이터는 사랑을 싣고"</p>
-    <p class="footer-date">2025년 12월</p>
-  </footer>
+  </section>
+
+  </div> <!-- horizontal-container 끝 -->
 
   <script>
-    const reveals = document.querySelectorAll('.reveal');
-    function revealOnScroll() {
-      reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-          el.classList.add('active');
+    // BGM
+    const bgm = document.getElementById('bgm');
+    const startMusic = () => {
+      bgm.volume = 0.5;
+      bgm.play();
+      window.removeEventListener('click', startMusic);
+      window.removeEventListener('touchstart', startMusic);
+    };
+    window.addEventListener('click', startMusic);
+    window.addEventListener('touchstart', startMusic);
+
+    // Quiz interaction
+    const quizSection = document.getElementById('quizSection');
+    const quizAnswer = document.getElementById('quizAnswer');
+    let quizRevealed = false;
+
+    quizSection.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!quizRevealed) {
+        quizAnswer.classList.add('show');
+        quizSection.querySelector('.quiz-hint').style.display = 'none';
+        quizRevealed = true;
+      }
+    });
+
+    // Horizontal scroll container
+    const container = document.getElementById('horizontalContainer');
+    const pages = document.querySelectorAll('.page');
+    const pageIndicator = document.getElementById('pageIndicator');
+
+    // Page indicator
+    pages.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'page-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => {
+        pages[i].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+      });
+      pageIndicator.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.page-dot');
+
+    // Intersection observer for active dot
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = Array.from(pages).indexOf(entry.target);
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
         }
       });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
+    }, { threshold: 0.5, root: container });
 
+    pages.forEach(page => observer.observe(page));
 
+    // Wheel event - 세로 스크롤을 가로로 변환
+    let isScrolling = false;
+    container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (isScrolling) return;
+      
+      if (Math.abs(e.deltaY) > 10) {
+        isScrolling = true;
+        const currentScroll = container.scrollLeft;
+        const pageWidth = window.innerWidth;
+        const currentPage = Math.round(currentScroll / pageWidth);
+        
+        let targetPage;
+        if (e.deltaY > 0) {
+          targetPage = Math.min(currentPage + 1, pages.length - 1);
+        } else {
+          targetPage = Math.max(currentPage - 1, 0);
+        }
+        
+        pages[targetPage].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+        
+        setTimeout(() => { isScrolling = false; }, 800);
+      }
+    }, { passive: false });
 
+    // Bingo grid - 더미 데이터
+    const keywords = [
+      '따뜻함', '향기', '달달함', '실용적', '귀여움', '건강',
+      '힐링', '반짝임', '포근함', '유머', '감성', '에너지',
+      '여유', '설렘', '청량함', '아늑함', '행복', '위로',
+      '소중함', '특별함', '센스', '정성', '사랑', '감사',
+      '기쁨', '평화', '희망', '축복', '은혜', '믿음',
+      '소망', '인내', '친절', '배려', '용기', '지혜',
+      '겸손', '성실'
+    ];
+
+    const bingoGrid = document.getElementById('bingoGrid');
+
+    keywords.forEach(keyword => {
+      const cell = document.createElement('div');
+      cell.className = 'bingo-cell';
+      cell.textContent = keyword;
+      cell.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cell.classList.toggle('selected');
+      });
+      bingoGrid.appendChild(cell);
+    });
+
+    // Award pages - 클릭하면 수상자 공개
+    const awardPages = document.querySelectorAll('.award-page[data-award]');
+    awardPages.forEach(page => {
+      page.addEventListener('click', (e) => {
+        if (!page.classList.contains('revealed')) {
+          e.stopPropagation();
+          page.classList.add('revealed');
+        }
+      });
+    });
   </script>
-<script>
-  const bgm = document.getElementById('bgm');
-
-  const startMusic = () => {
-    bgm.volume = 0.6;
-    bgm.play();
-    window.removeEventListener('click', startMusic);
-    window.removeEventListener('touchstart', startMusic);
-    window.removeEventListener('scroll', startMusic);
-  };
-
-  window.addEventListener('click', startMusic);
-  window.addEventListener('touchstart', startMusic);
-  window.addEventListener('scroll', startMusic);
-</script>
 
 </body>
 </html>
