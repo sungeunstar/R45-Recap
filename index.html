@@ -417,6 +417,73 @@
       opacity: 0;
     }
 
+    /* Gift Modal Popup */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      border: 1px solid #333;
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--gray);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--white);
+    }
+
+    .modal-keyword {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-message {
+      font-size: 0.95rem;
+      color: var(--white);
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
     /* Gift Exchange */
     .gift-section {
       background: linear-gradient(180deg, #0a0a0a 0%, #0d0505 100%);
@@ -575,10 +642,6 @@
 </head>
 <body>
 
-  <audio id="bgm" loop>
-    <source src="https://mgpxqmqvlbjfywbbsiwt.supabase.co/storage/v1/object/public/music/Award%20Music%20%20Winner.mp3" type="audio/mpeg">
-  </audio>
-
   <div class="page-indicator" id="pageIndicator"></div>
 
   <div class="horizontal-container" id="horizontalContainer">
@@ -598,7 +661,7 @@
   <!-- 2. Video -->
   <section class="page video-section">
     <div class="video-container">
-      VIDEO PLACEHOLDER
+      <iframe src="https://player.vimeo.com/video/1149759156?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:100%;" title="2025 recap"></iframe>
     </div>
   </section>
 
@@ -659,7 +722,6 @@
   <!-- 6. 내가 개근할 상인가? -->
   <section class="page award-page" data-award>
     <div class="award-emoji">🌲</div>
-    <p class="award-category">최다 성실 (개근)</p>
     <h2 class="award-name">내가 개근할 상인가?</h2>
     <div class="award-reveal">
       <p class="award-winner">강혜령</p>
@@ -675,7 +737,6 @@
   <!-- 7. 기름부음상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">⛽</div>
-    <p class="award-category">장거리 거주자</p>
     <h2 class="award-name">기름부음상</h2>
     <div class="award-reveal">
       <p class="award-winner">함상미</p>
@@ -687,7 +748,6 @@
   <!-- 8. 금쪽이상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">🩹</div>
-    <p class="award-category">고생한 피아노</p>
     <h2 class="award-name">금쪽이상</h2>
     <div class="award-reveal">
       <p class="award-winner">노드피아노</p>
@@ -700,7 +760,6 @@
   <!-- 9. R45 마에스트로상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">🎸</div>
-    <p class="award-category">밴드마스터</p>
     <h2 class="award-name">R45 마에스트로상</h2>
     <div class="award-reveal">
       <p class="award-winner">박상범</p>
@@ -712,7 +771,6 @@
   <!-- 10. 미라클 모닝상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">🌅</div>
-    <p class="award-category">1부 붙박이팀</p>
     <h2 class="award-name">미라클 모닝상</h2>
     <div class="award-reveal">
       <div class="award-winner-multi">
@@ -727,7 +785,6 @@
   <!-- 11. 원더우먼상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">👩‍👧</div>
-    <p class="award-category">아기 엄마</p>
     <h2 class="award-name">원더우먼상</h2>
     <div class="award-reveal">
       <div class="award-winner-multi">
@@ -742,7 +799,6 @@
   <!-- 12. 내 귀에 캔디상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">🎧</div>
-    <p class="award-category">음향 엔지니어</p>
     <h2 class="award-name">내 귀에 캔디상</h2>
     <div class="award-reveal">
       <div class="award-winner-multi">
@@ -756,7 +812,6 @@
   <!-- 13. 천국 5G 개통상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">📡</div>
-    <p class="award-category">최다 중보자</p>
     <h2 class="award-name">천국 5G 개통상</h2>
     <div class="award-reveal">
       <p class="award-winner">박진</p>
@@ -768,11 +823,10 @@
   <!-- 14. 예수님 붕어빵상 -->
   <section class="page award-page" data-award>
     <div class="award-emoji">🏆</div>
-    <p class="award-category">설문 1위 (감사)</p>
     <h2 class="award-name">예수님 붕어빵상</h2>
     <div class="award-reveal">
-      <p class="award-pending">? ? ?</p>
-      <p class="award-description">설문 후 발표</p>
+      <p class="award-winner">김종진</p>
+      <p class="award-description">예배팀 안에서 가장 고마웠던 사람<br>설문 결과 압도적 1위!</p>
     </div>
     <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
   </section>
@@ -780,11 +834,20 @@
   <!-- 15. Gift Exchange -->
   <section class="page gift-section">
     <h2 class="gift-title">GIFT EXCHANGE</h2>
-    <p class="gift-subtitle">키워드를 선택하세요 · 선택된 키워드는 흐려집니다</p>
+    <p class="gift-subtitle">키워드를 선택하세요 · 클릭하면 메시지가 공개됩니다</p>
     <div class="bingo-grid" id="bingoGrid">
-      <!-- 더미 데이터 38개 -->
+      <!-- JS로 생성 -->
     </div>
   </section>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">✕</button>
+      <p class="modal-keyword" id="modalKeyword"></p>
+      <p class="modal-message" id="modalMessage"></p>
+    </div>
+  </div>
 
   <!-- 16. Footer -->
   <section class="page footer-page">
@@ -801,17 +864,6 @@
   </div> <!-- horizontal-container 끝 -->
 
   <script>
-    // BGM
-    const bgm = document.getElementById('bgm');
-    const startMusic = () => {
-      bgm.volume = 0.5;
-      bgm.play();
-      window.removeEventListener('click', startMusic);
-      window.removeEventListener('touchstart', startMusic);
-    };
-    window.addEventListener('click', startMusic);
-    window.addEventListener('touchstart', startMusic);
-
     // Quiz interaction
     const quizSection = document.getElementById('quizSection');
     const quizAnswer = document.getElementById('quizAnswer');
@@ -882,28 +934,62 @@
       }
     }, { passive: false });
 
-    // Bingo grid - 더미 데이터
-    const keywords = [
-      '따뜻함', '향기', '달달함', '실용적', '귀여움', '건강',
-      '힐링', '반짝임', '포근함', '유머', '감성', '에너지',
-      '여유', '설렘', '청량함', '아늑함', '행복', '위로',
-      '소중함', '특별함', '센스', '정성', '사랑', '감사',
-      '기쁨', '평화', '희망', '축복', '은혜', '믿음',
-      '소망', '인내', '친절', '배려', '용기', '지혜',
-      '겸손', '성실'
+    // Gift data from database
+    const giftData = [
+      { name: '전성은', keyword: '겉촉속촉 - 미스트', message: '이 선물은 일산에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 사람에게 기쁨을 주었고 지금은 당신에게로 옮겨진 이 선물은 3개월 안에 당신 곁을 떠나야 합니다. 이 선물이 필요한 R45 팀원에게 꼭 전달해주세요' },
+      { name: '하정인', keyword: '건강함 - 홍삼', message: '2025년 너무 수고 많으셨습니다. 2026년도 영혼육이 강건하시길 기도합니다!! 🤗' },
+      { name: '김태완', keyword: '영혼육 - 헬스 스트랩', message: '2026 새시즌을 더욱 힘차게 달려가기위해 감당할수있는 체력을 준비하는 예배팀 되시기를 바라는 마음으로 준비하였습니다' },
+      { name: '최재영', keyword: '뒷심 - 비타민', message: '2025 마무리까지 화이팅!' },
+      { name: '김종진', keyword: '향기로운 성탄', message: '예수님 탄생의 기쁨이 집안 곳곳에 퍼지길🙏🏻' },
+      { name: '안은영', keyword: '달콤바삭고소', message: '2025년 1년 동안 수고한 당신께 달달한 쿠키 선물드립니다♡ 따뜻한 커피와 함께 맛나게 쿠키 한박스 뿌셔보세요~! GOD BLESS U :)' },
+      { name: '유희상', keyword: '에너지 - 비타민', message: '무선마이크에 베터리 충전이 필요하듯이 우리 몸에도 비타민으로 에너지 충천을 하기를🙏' },
+      { name: '강호', keyword: '별다방 - 기프트카드', message: '2025년 고생 많으셨습니다.\n2026년 에는 소원하는 일과 기도제목들이 이루어질 것을 믿음으로 기도 합니다.\n축복합니다- :)' },
+      { name: '김대은', keyword: '연결 - 보조배터리', message: '배터리 2% 빨간색 경고등과 같이 나의 힘이 다해가는 것 같은 순간에도..\n위로부터 부어주시는 새로운 힘과 은혜를 누리는 2026년 되시기를 축복합니다!!!' },
+      { name: '김홍석', keyword: '포근함', message: '집을 돌아온 그대의 발바닥이 따뜻하고 포근하도록' },
+      { name: '황정경', keyword: '예언적 - 핸드크림', message: '2026년에 예언적인 노래가 더 풀어지길, 하늘문을 여는 예배자가 되길 기도합니다.' },
+      { name: '유은혜', keyword: 'Melting', message: '추운 겨울 Melting - Melting 하게 이 친구가 함께해 줄거에오(찡긋)' },
+      { name: '이지희', keyword: '부드러움 - 헤어에센스', message: '2025년 한해 수고많으셨어요~\n2026년에도 하나님나라를 향해 함께 전심전력으로 달려가보아요^^' },
+      { name: '박상범', keyword: '휴식과 힐링 - 티박스', message: '따듯한 한잔의 차와 함께 잠시라도 누리는 삶의 여유와 힐링을 경험하시길!! 그 회복을 힘입어 더욱 전심으로 예배합시다!! 샬롬!!' },
+      { name: '박진', keyword: '깨끗함 - 수건', message: '올 한해동안 수고많았어요\n부족한 제가 탁월한, 준비된 예배자 당신과 같이 예배할 수 있어 너무 감사합니다' },
+      { name: '박민욱', keyword: '수혈 - 스타벅스 상품권', message: '따뜻한 커피 한잔으로 행복한 한주 시작하세요😍' },
+      { name: '조수현', keyword: '기름부음 - 멀티오일', message: 'Fresh Anointing! 새로운 기름부음이 부어질것입니다! 예배할때마다 하늘문이 열리고 주님의 영광이 나타날지어다!! 실제적인 치유와 회복이, 돌파가 있을지어다!!' },
+      { name: '김상희', keyword: '앜ㅋㅋㅋㅋㅋ - 프로폴리스', message: '올 겨울 작은 감기에도 걸리지 마시고, 26년에는 영혼육이 더 강건하며 주님의 기름부음과 은총이 흘러 넘치는 예배자로 든든히 서길 진심으로 축복합니다🤍' },
+      { name: '서강휘', keyword: '촉촉하고 맑고 자신있게', message: '한 해 동안 수고 많으셨습니다.' },
+      { name: '정요한', keyword: '누나가 골랐어요 - 팩/방향제/과자', message: '한 해동안 수고많으셨습니다!!\n2026년도 완전하신 주님의 일하심을 경험하는 한 해 되시길 간절히 기도합니다!!\n\n작은 선물이지만.. 건강한 피부 되시길, 좋은 향기 많이 나시길, 맛있는거 많이 드시길 바라는 마음에 골라봤습니다🤭🤭' },
+      { name: '우혜진', keyword: '포근함 - 아이마스크', message: '따뜻하고 포근함을 느끼는 휴식 또는 단잠의 시간이 되시기를 소망합니다!' }
     ];
 
     const bingoGrid = document.getElementById('bingoGrid');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalKeyword = document.getElementById('modalKeyword');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalClose = document.getElementById('modalClose');
 
-    keywords.forEach(keyword => {
+    giftData.forEach(gift => {
       const cell = document.createElement('div');
       cell.className = 'bingo-cell';
-      cell.textContent = keyword;
+      cell.textContent = gift.keyword.split(' - ')[0]; // 키워드만 표시
       cell.addEventListener('click', (e) => {
         e.stopPropagation();
-        cell.classList.toggle('selected');
+        // 모달 열기
+        modalKeyword.textContent = gift.keyword;
+        modalMessage.textContent = gift.message;
+        modalOverlay.classList.add('show');
+        cell.classList.add('selected');
       });
       bingoGrid.appendChild(cell);
+    });
+
+    // 모달 닫기
+    modalClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      modalOverlay.classList.remove('show');
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('show');
+      }
     });
 
     // Award pages - 클릭하면 수상자 공개
