@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2025 R45 RECAP</title>
+  <title>R45 RECAP 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -13,32 +14,21 @@
       --green: #00ff6a;
       --gold: #ffd700;
       --gray: #888;
+      --dark-gray: #1a1a1a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    html, body {
-      overflow: hidden;
-      height: 100%;
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       background: var(--black);
       color: var(--white);
       font-family: 'Noto Sans KR', sans-serif;
-    }
-
-    .horizontal-container {
-      display: flex;
-      height: 100vh;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-    }
-
-    .horizontal-container::-webkit-scrollbar {
-      display: none;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -52,47 +42,40 @@
       z-index: 9999;
     }
 
-    /* Full screen sections */
-    .page {
-      min-width: 100vw;
-      height: 100vh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    /* Hero */
-    .hero {
       text-align: center;
+      padding: 2rem;
     }
 
     .hero-badge {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
+      font-size: 0.9rem;
       letter-spacing: 0.5em;
       color: var(--gray);
       margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
     }
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 18vw, 12rem);
+      font-size: clamp(4rem, 15vw, 10rem);
       line-height: 0.9;
-      opacity: 0;
-      animation: slideUp 1s ease-out 0.3s forwards;
     }
 
     .hero-title .year {
       display: block;
-      font-size: 0.35em;
+      font-size: 0.3em;
       letter-spacing: 0.5em;
       color: var(--gray);
       margin-bottom: 0.5rem;
@@ -108,484 +91,19 @@
 
     .hero-subtitle {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.2rem, 4vw, 2.5rem);
-      letter-spacing: 0.4em;
-      margin-top: 1.5rem;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.6s forwards;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 3rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      color: var(--gray);
-      opacity: 0;
-      animation: fadeIn 1s ease-out 1.2s forwards;
-    }
-
-    .scroll-hint::after {
-      content: '↓';
-      display: block;
-      text-align: center;
-      margin-top: 0.5rem;
-      font-size: 1.5rem;
-      animation: bounce 2s infinite;
-    }
-
-    /* Video Section */
-    .video-section {
-      background: #000;
-    }
-
-    .video-container {
-      width: 90%;
-      max-width: 900px;
-      aspect-ratio: 16/9;
-      background: #111;
-      border: 1px solid #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
-    }
-
-    /* Quiz Section */
-    .quiz-section {
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .quiz-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.4em;
-      color: var(--red);
-      margin-bottom: 2rem;
-    }
-
-    .quiz-question {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 8vw, 5rem);
-      line-height: 1.2;
-      max-width: 900px;
-    }
-
-    .quiz-hint {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: var(--gray);
-    }
-
-    .quiz-answer {
-      display: none;
-      margin-top: 2rem;
-    }
-
-    .quiz-answer.show {
-      display: block;
-      animation: revealAnswer 0.8s ease-out forwards;
-    }
-
-    .quiz-answer-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 10vw, 6rem);
-      color: var(--gold);
-      text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-    }
-
-    .quiz-answer-sub {
-      font-size: 1.2rem;
-      color: var(--green);
-      margin-top: 1rem;
-    }
-
-    /* Chart Section */
-    .chart-section {
-      background: linear-gradient(180deg, #0a0a0a 0%, #0d0d0d 100%);
-      padding: 2rem;
-    }
-
-    .chart-container {
-      width: 100%;
-      max-width: 800px;
-    }
-
-    .chart-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 6vw, 4rem);
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .chart-list {
-      list-style: none;
-    }
-
-    .chart-item {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid #222;
-    }
-
-    .chart-rank {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      min-width: 60px;
-      color: var(--gray);
-    }
-
-    .chart-rank.top { color: var(--gold); }
-
-    .chart-info { flex: 1; }
-
-    .chart-song {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    .chart-plays {
-      font-size: 0.85rem;
-      color: var(--green);
-    }
-
-    .chart-bar {
-      width: 120px;
-      height: 4px;
-      background: #222;
-    }
-
-    .chart-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--red), var(--green));
-    }
-
-    .chart-keyword {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: linear-gradient(135deg, #1a0505 0%, #0a0a0a 100%);
-      border: 1px solid #333;
-      text-align: center;
-    }
-
-    .chart-keyword-label {
-      font-size: 0.8rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
-      margin-bottom: 0.5rem;
-    }
-
-    .chart-keyword-word {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 4rem;
-      color: var(--red);
-      text-shadow: 0 0 30px rgba(255, 45, 45, 0.5);
-    }
-
-    /* Awards Intro */
-    .awards-intro {
-      text-align: center;
-      background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
-    }
-
-    .awards-intro-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.5em;
-      color: var(--gray);
-      margin-bottom: 1rem;
-    }
-
-    .awards-intro-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 15vw, 10rem);
-      background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
-    }
-
-    /* Award Page */
-    .award-page {
-      text-align: center;
-      background: radial-gradient(circle at center, #111 0%, #0a0a0a 100%);
-    }
-
-    .award-emoji {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    .award-category {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.4em;
-      color: var(--gray);
-      margin-bottom: 0.5rem;
-    }
-
-    .award-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 10vw, 6rem);
-      background: linear-gradient(135deg, var(--gold), #fff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 2rem;
-    }
-
-    .award-winner {
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      font-weight: 700;
-      color: var(--green);
-      margin-bottom: 0.5rem;
-    }
-
-    .award-winner-multi {
       font-size: clamp(1rem, 3vw, 1.5rem);
-      color: var(--green);
-      line-height: 1.8;
-    }
-
-    .award-description {
-      font-size: 1rem;
-      color: var(--gray);
-      margin-top: 1rem;
-      max-width: 500px;
-    }
-
-    .award-pending {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--gold);
-      animation: pulse 2s infinite;
-    }
-
-    .award-stats {
+      letter-spacing: 0.3em;
       margin-top: 1.5rem;
-      padding: 1rem 2rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 8px;
-      font-size: 0.9rem;
       color: var(--gray);
-      line-height: 1.8;
     }
 
-    .award-sub {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: var(--green);
-    }
-
-    /* Award reveal interaction */
-    .award-page {
-      cursor: pointer;
-    }
-
-    .award-reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-      pointer-events: none;
-    }
-
-    .award-page.revealed .award-reveal {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .award-hint {
+    .scroll-indicator {
       position: absolute;
-      bottom: 3rem;
-      font-size: 0.85rem;
+      bottom: 2rem;
+      font-size: 0.8rem;
       color: var(--gray);
-      transition: opacity 0.3s ease;
-    }
-
-    .award-page.revealed .award-hint {
-      opacity: 0;
-    }
-
-    /* Gift Modal Popup */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .modal-overlay.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-content {
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-      border: 1px solid #333;
-      padding: 2.5rem;
-      max-width: 500px;
-      width: 90%;
-      position: relative;
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-    }
-
-    .modal-overlay.show .modal-content {
-      transform: scale(1);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      color: var(--gray);
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    .modal-close:hover {
-      color: var(--white);
-    }
-
-    .modal-keyword {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-message {
-      font-size: 0.95rem;
-      color: var(--white);
-      line-height: 1.8;
-      white-space: pre-wrap;
-    }
-
-    /* Gift Exchange */
-    .gift-section {
-      background: linear-gradient(180deg, #0a0a0a 0%, #0d0505 100%);
-    }
-
-    .gift-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 6vw, 4rem);
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .gift-subtitle {
-      font-size: 0.9rem;
-      color: var(--gray);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .bingo-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      max-width: 700px;
-      width: 100%;
-    }
-
-    @media (max-width: 600px) {
-      .bingo-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
-      }
-    }
-
-    .bingo-cell {
-      aspect-ratio: 1;
-      background: #111;
-      border: 1px solid #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: clamp(0.6rem, 2vw, 0.9rem);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
-      padding: 0.3rem;
-    }
-
-    .bingo-cell:hover {
-      border-color: var(--green);
-      background: #1a1a1a;
-    }
-
-    .bingo-cell.selected {
-      background: linear-gradient(135deg, rgba(255,45,45,0.3), rgba(0,255,106,0.3));
-      border-color: var(--gold);
-      color: var(--gray);
-      text-decoration: line-through;
-      opacity: 0.6;
-    }
-
-    /* Footer */
-    .footer-page {
-      text-align: center;
-    }
-
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 8vw, 5rem);
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-dresscode {
-      display: inline-block;
-      padding: 1rem 2rem;
-      border: 1px solid #333;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-dresscode span {
-      font-family: 'Bebas Neue', sans-serif;
       letter-spacing: 0.2em;
-    }
-
-    .footer-dresscode .red { color: var(--red); }
-    .footer-dresscode .green { color: var(--green); }
-
-    .footer-tagline {
-      font-size: 1rem;
-      color: var(--gray);
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+      animation: bounce 2s infinite;
     }
 
     @keyframes bounce {
@@ -593,372 +111,870 @@
       50% { transform: translateY(10px); }
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    /* Hero Animations - Noomo Style */
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    @keyframes heroScale {
+      from { opacity: 0; transform: scale(0.9); letter-spacing: 0.3em; }
+      to { opacity: 1; transform: scale(1); letter-spacing: 0; }
     }
 
-    @keyframes revealAnswer {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 30px rgba(255,45,45,0.3), 0 0 60px rgba(0,255,106,0.2); }
+      50% { text-shadow: 0 0 50px rgba(255,45,45,0.5), 0 0 100px rgba(0,255,106,0.4); }
     }
 
-    /* Page indicator */
-    .page-indicator {
-      position: fixed;
+    @keyframes lineReveal {
+      from { clip-path: inset(0 100% 0 0); }
+      to { clip-path: inset(0 0 0 0); }
+    }
+
+    .hero-badge {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.5em;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: heroFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 15vw, 10rem);
+      line-height: 0.9;
+      opacity: 0;
+      animation: heroScale 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    .hero-title .year {
+      display: block;
+      font-size: 0.3em;
+      letter-spacing: 0.5em;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .r45 {
+      display: block;
+      background: linear-gradient(135deg, var(--red), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+
+    .hero-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      letter-spacing: 0.3em;
+      margin-top: 1.5rem;
+      color: var(--gray);
+      opacity: 0;
+      animation: heroFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
+    }
+
+    .scroll-indicator {
+      position: absolute;
       bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: row;
-      gap: 0.5rem;
-      z-index: 100;
+      font-size: 0.8rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      opacity: 0;
+      animation: heroFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards, bounce 2.5s ease 3s infinite;
     }
 
-    .page-dot {
-      width: 8px;
-      height: 8px;
+    /* Scroll Animations - Noomo Style (부드럽고 고급스럽게) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(80px);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+    }
+
+    .fade-left {
+      opacity: 0;
+      transform: translateX(-100px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-right {
+      opacity: 0;
+      transform: translateX(100px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .blur-in {
+      opacity: 0;
+      filter: blur(30px);
+      transform: translateY(40px) scale(0.95);
+      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  filter 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .blur-in.visible {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
+    }
+
+    .rotate-in {
+      opacity: 0;
+      transform: rotate(-5deg) translateY(40px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .rotate-in.visible {
+      opacity: 1;
+      transform: rotate(0) translateY(0);
+    }
+
+    /* Stagger animations with delay */
+    .stagger-children > * {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stagger-children.visible > *:nth-child(1) { transition-delay: 0.1s; }
+    .stagger-children.visible > *:nth-child(2) { transition-delay: 0.2s; }
+    .stagger-children.visible > *:nth-child(3) { transition-delay: 0.3s; }
+    .stagger-children.visible > *:nth-child(4) { transition-delay: 0.4s; }
+    .stagger-children.visible > *:nth-child(5) { transition-delay: 0.5s; }
+    .stagger-children.visible > *:nth-child(6) { transition-delay: 0.6s; }
+    .stagger-children.visible > *:nth-child(7) { transition-delay: 0.7s; }
+    .stagger-children.visible > *:nth-child(8) { transition-delay: 0.8s; }
+    .stagger-children.visible > *:nth-child(9) { transition-delay: 0.9s; }
+
+    .stagger-children.visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Gift cards - 순차 페이드인 */
+    .gift-card {
+      background: var(--dark-gray);
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.2rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.4s ease;
+    }
+
+    .gift-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gift-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--green);
+    }
+
+    /* Parallax elements */
+    .parallax-slow {
+      will-change: transform;
+    }
+
+    .parallax-fast {
+      will-change: transform;
+    }
+
+    /* Smooth cursor follower */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,45,45,0.15) 0%, rgba(0,255,106,0.1) 30%, transparent 70%);
       border-radius: 50%;
-      background: #333;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+      opacity: 0;
     }
 
-    .page-dot.active {
-      background: var(--green);
-      width: 20px;
-      border-radius: 4px;
+    .cursor-glow.active {
+      opacity: 1;
     }
 
+    /* Text reveal animation */
+    .text-reveal {
+      overflow: hidden;
+    }
+
+    .text-reveal span {
+      display: inline-block;
+      transform: translateY(100%);
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .text-reveal.visible span {
+      transform: translateY(0);
+    }
+
+    /* Magnetic hover effect for cards */
+    .magnetic {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Line animation */
+    .line-reveal {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .line-reveal::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), var(--green));
+      transform: translateX(-100%);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .line-reveal.visible::after {
+      transform: translateX(0);
+    }
+
+    /* Split text animation for titles */
+    .char-reveal {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(50px) rotate(10deg);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .char-reveal.visible {
+      opacity: 1;
+      transform: translateY(0) rotate(0);
+    }
+
+    /* Smooth section transitions */
+    section {
+      position: relative;
+    }
+
+    /* Gradient line between sections */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transform: scaleX(0);
+      transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .section-divider.visible {
+      opacity: 0.5;
+      transform: scaleX(1);
+    }
+
+    /* Section Common */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 8vw, 4rem);
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, var(--gold), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Video Section */
+    .video-section {
+      padding: 3rem 0;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: var(--dark-gray);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+
+    /* Awards Section */
+    .awards-section {
+      padding: 5rem 0;
+    }
+
+    .awards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .award-card {
+      background: linear-gradient(135deg, var(--dark-gray), #111);
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .award-card:hover {
+      transform: translateX(8px);
+      border-color: var(--gold);
+    }
+
+    .award-emoji {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .award-content {
+      flex: 1;
+    }
+
+    .award-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .award-winner {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.3rem;
+    }
+
+    .award-desc {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .award-stats {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #333;
+      line-height: 1.5;
+    }
+
+    /* Gift Messages Section */
+    .gifts-section {
+      padding: 5rem 0;
+      background: linear-gradient(180deg, transparent, rgba(255,215,0,0.03), transparent);
+    }
+
+    .gifts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .gift-card {
+      background: var(--dark-gray);
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.2rem;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .gift-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--green);
+    }
+
+    .gift-keyword {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .gift-name {
+      font-size: 0.85rem;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .gift-message {
+      font-size: 0.85rem;
+      color: var(--white);
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    /* 2026 Section */
+    .next-year {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-year::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255,45,45,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .next-year-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.5em;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .next-year-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 20vw, 12rem);
+      line-height: 0.9;
+      background: linear-gradient(135deg, var(--red), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .next-year-slogan {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 12vw, 8rem);
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 60px rgba(255,45,45,0.5), 0 0 120px rgba(0,255,106,0.3);
+    }
+
+    .next-year-sub {
+      font-size: 1rem;
+      color: var(--gray);
+      margin-top: 2rem;
+      letter-spacing: 0.2em;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 3rem;
+      text-align: center;
+      border-top: 1px solid #222;
+    }
+
+    /* Music Chart */
+    .chart-section {
+      padding: 5rem 0;
+      background: linear-gradient(180deg, transparent, rgba(255,45,45,0.03), transparent);
+    }
+
+    .chart-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .chart-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--dark-gray);
+      border: 1px solid #222;
+      border-radius: 10px;
+    }
+
+    .chart-rank {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--gray);
+      min-width: 50px;
+    }
+
+    .chart-rank.top {
+      color: var(--gold);
+    }
+
+    .chart-info {
+      flex: 1;
+    }
+
+    .chart-song {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .chart-plays {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .chart-keyword {
+      text-align: center;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, rgba(255,45,45,0.1), rgba(0,255,106,0.1));
+      border-radius: 16px;
+      border: 1px solid #333;
+    }
+
+    .chart-keyword-label {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .chart-keyword-word {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 12vw, 6rem);
+      background: linear-gradient(135deg, var(--red), var(--gold), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--gray);
+      letter-spacing: 0.3em;
+    }
+
+    .footer-dresscode {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .footer-dresscode .red { color: var(--red); }
+    .footer-dresscode .green { color: var(--green); }
+
+    /* Mobile Responsive */
     @media (max-width: 600px) {
-      .page-indicator { display: none; }
+      section { padding: 3rem 0; }
+      
+      .award-card {
+        padding: 1rem;
+      }
+
+      .award-emoji {
+        font-size: 2rem;
+      }
+
+      .award-name {
+        font-size: 1.1rem;
+      }
+
+      .award-winner {
+        font-size: 1rem;
+      }
+
+      .gifts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gift-card {
+        padding: 1rem;
+      }
+
+      .next-year-slogan {
+        letter-spacing: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="page-indicator" id="pageIndicator"></div>
-
-  <div class="horizontal-container" id="horizontalContainer">
-
-  <!-- 1. Hero -->
-  <section class="page hero">
+  <!-- Hero -->
+  <section class="hero" id="hero">
     <p class="hero-badge">R45 WORSHIP TEAM PRESENTS</p>
     <h1 class="hero-title">
       <span class="year">2025</span>
       <span class="r45">R45</span>
       RECAP
     </h1>
-    <p class="hero-subtitle">THE AWARDS</p>
-    <div class="scroll-hint">SCROLL</div>
+    <p class="hero-subtitle">THE AWARDS · 회고</p>
+    <p class="scroll-indicator">SCROLL ↓</p>
   </section>
 
-  <!-- 2. Video -->
-  <section class="page video-section">
-    <div class="video-container">
-      <iframe src="https://player.vimeo.com/video/1149759156?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:100%;" title="2025 recap"></iframe>
+  <!-- Video -->
+  <section class="video-section">
+    <div class="container">
+      <div class="video-wrapper blur-in">
+        <iframe src="https://player.vimeo.com/video/1149759156?badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="2025 recap"></iframe>
+      </div>
     </div>
   </section>
 
-  <!-- 3. Quiz -->
-  <section class="page quiz-section" id="quizSection">
-    <p class="quiz-label">QUIZ TIME</p>
-    <h2 class="quiz-question">2025년<br>R45가 가장 많이 부른<br>찬양은?</h2>
-    <p class="quiz-hint">화면을 클릭하면 정답이 공개됩니다</p>
-    <div class="quiz-answer" id="quizAnswer">
-      <p class="quiz-answer-title">예수의 이름이 올라가네</p>
-      <p class="quiz-answer-sub">5회 선곡 · R45가 가장 사랑하는 곡</p>
+  <!-- Awards -->
+  <section class="awards-section">
+    <div class="container">
+      <h2 class="section-title blur-in">THE AWARDS</h2>
+      <div class="awards-grid stagger-children">
+        <div class="award-card">
+          <div class="award-emoji">🌲</div>
+          <div class="award-content">
+            <p class="award-name">내가 개근할 상인가?</p>
+            <p class="award-winner">강혜령</p>
+            <p class="award-desc">한결같이 그 자리를 지켜준 R45의 뿌리 · 총 32회 섬김</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">⛽</div>
+          <div class="award-content">
+            <p class="award-name">기름부음상</p>
+            <p class="award-winner">함상미</p>
+            <p class="award-desc">도로에 기름이 뿌려졌지만, 하늘의 기름이 삶을 통해 부어짐을 경험하는 상</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">🩹</div>
+          <div class="award-content">
+            <p class="award-name">금쪽이상</p>
+            <p class="award-winner">노드피아노 (대리수상: 최향미)</p>
+            <p class="award-desc">1년 365일, 때론 투정을 부리듯 아픔을 호소하지만 그래도 언제나 금쪽이처럼 자리를 지켰다</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">🎸</div>
+          <div class="award-content">
+            <p class="award-name">R45 마에스트로상</p>
+            <p class="award-winner">박상범</p>
+            <p class="award-desc">사운드의 중심에서 밴드를 하나로 묶는 R45의 마에스트로</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">🌅</div>
+          <div class="award-content">
+            <p class="award-name">미라클 모닝상</p>
+            <p class="award-winner">하정인 · 김수아 · 김태완 · 우혜진 · 김미영 · 지강호 · 전미연</p>
+            <p class="award-desc">새벽이슬 같은 1부를 지킨 기적의 용사들</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">👩‍👧</div>
+          <div class="award-content">
+            <p class="award-name">원더우먼상</p>
+            <p class="award-winner">우혜진 · 박보미 · 김유진 · 백인영</p>
+            <p class="award-desc">출산을 하고 다시 R45로 돌아온 육아와 섬김을 동시에 해내는 영웅들</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">🎧</div>
+          <div class="award-content">
+            <p class="award-name">내 귀에 캔디상</p>
+            <p class="award-winner">김지상 · 서강휘 · 유희상</p>
+            <p class="award-desc">하울링 대신 하모니, 잡음 대신 은혜를 선물하는 팀</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">📡</div>
+          <div class="award-content">
+            <p class="award-name">천국 5G 개통상</p>
+            <p class="award-winner">박진</p>
+            <p class="award-desc">기도문 85개 · 23,840자 · A4 15장 분량의 중보기도</p>
+            <p class="award-stats">매 주일 1·2·3부 예배, 특별집회, 팀원들의 아픔과 선교까지 — 가장 먼저, 가장 길고 구체적으로 기도하는 진짜 5G급 연결!</p>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-emoji">🏆</div>
+          <div class="award-content">
+            <p class="award-name">예수님 붕어빵상</p>
+            <p class="award-winner">김종진</p>
+            <p class="award-desc">예배팀 안에서 가장 고마웠던 사람 · 설문 압도적 1위!</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 4. Chart -->
-  <section class="page chart-section">
-    <div class="chart-container">
-      <h2 class="chart-title">MUSIC CHART</h2>
-      <ul class="chart-list">
-        <li class="chart-item">
+  <!-- Music Chart -->
+  <section class="chart-section">
+    <div class="container">
+      <h2 class="section-title blur-in">MUSIC CHART</h2>
+      <div class="chart-container fade-up">
+        <div class="chart-item">
           <span class="chart-rank top">01</span>
           <div class="chart-info">
             <p class="chart-song">예수의 이름이 올라가네</p>
             <p class="chart-plays">5회 선곡</p>
           </div>
-          <div class="chart-bar"><div class="chart-bar-fill" style="width: 100%;"></div></div>
-        </li>
-        <li class="chart-item">
+        </div>
+        <div class="chart-item">
           <span class="chart-rank">02</span>
           <div class="chart-info">
             <p class="chart-song">지금은 엘리야 때처럼</p>
             <p class="chart-plays">4회 선곡</p>
           </div>
-          <div class="chart-bar"><div class="chart-bar-fill" style="width: 80%;"></div></div>
-        </li>
-        <li class="chart-item">
+        </div>
+        <div class="chart-item">
           <span class="chart-rank">02</span>
           <div class="chart-info">
             <p class="chart-song">Here for You</p>
             <p class="chart-plays">4회 선곡</p>
           </div>
-          <div class="chart-bar"><div class="chart-bar-fill" style="width: 80%;"></div></div>
-        </li>
-      </ul>
-      <div class="chart-keyword">
+        </div>
+      </div>
+      <div class="chart-keyword scale-in">
         <p class="chart-keyword-label">R45의 찬양을 나타내는 한 단어</p>
         <p class="chart-keyword-word">보혈</p>
       </div>
     </div>
   </section>
 
-  <!-- 5. Awards Intro -->
-  <section class="page awards-intro">
-    <p class="awards-intro-label">AND NOW</p>
-    <h2 class="awards-intro-title">THE AWARDS</h2>
-  </section>
-
-  <!-- 6. 내가 개근할 상인가? -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">🌲</div>
-    <h2 class="award-name">내가 개근할 상인가?</h2>
-    <div class="award-reveal">
-      <p class="award-winner">강혜령</p>
-      <p class="award-description">한결같이 그 자리를 지켜준 R45의 뿌리</p>
-      <div class="award-stats">
-        <p>🎸 총 32회 섬김</p>
-        <p>상반기 17회 · 하반기 15회</p>
-      </div>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 7. 기름부음상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">⛽</div>
-    <h2 class="award-name">기름부음상</h2>
-    <div class="award-reveal">
-      <p class="award-winner">함상미</p>
-      <p class="award-description">도로에 기름이 뿌려졌지만,<br>하늘의 기름이 삶을 통해 부어짐을 경험하는 상</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 8. 금쪽이상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">🩹</div>
-    <h2 class="award-name">금쪽이상</h2>
-    <div class="award-reveal">
-      <p class="award-winner">노드피아노</p>
-      <p class="award-description">1년 365일, 때론 투정을 부리듯 아픔을 호소하지만<br>그래도 언제나 그 자리에 금쪽이처럼 자리를 지켰다</p>
-      <p class="award-sub">대리수상: 최향미</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 9. R45 마에스트로상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">🎸</div>
-    <h2 class="award-name">R45 마에스트로상</h2>
-    <div class="award-reveal">
-      <p class="award-winner">박상범</p>
-      <p class="award-description">사운드의 중심에서 밴드를 하나로 묶는<br>R45의 마에스트로</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 10. 미라클 모닝상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">🌅</div>
-    <h2 class="award-name">미라클 모닝상</h2>
-    <div class="award-reveal">
-      <div class="award-winner-multi">
-        하정인 · 김수아 · 김태완<br>
-        우혜진 · 김미영 · 지강호 · 전미연
-      </div>
-      <p class="award-description">새벽이슬 같은 1부를 지킨 기적의 용사들</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 11. 원더우먼상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">👩‍👧</div>
-    <h2 class="award-name">원더우먼상</h2>
-    <div class="award-reveal">
-      <div class="award-winner-multi">
-        우혜진 · 박보미<br>
-        김유진 · 백인영
-      </div>
-      <p class="award-description">출산을 하고 다시 R45로 돌아온<br>육아와 섬김을 동시에 해내는 영웅들</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 12. 내 귀에 캔디상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">🎧</div>
-    <h2 class="award-name">내 귀에 캔디상</h2>
-    <div class="award-reveal">
-      <div class="award-winner-multi">
-        김지상 · 서강휘 · 유희상
-      </div>
-      <p class="award-description">하울링 대신 하모니,<br>잡음 대신 은혜를 선물하는 팀</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 13. 천국 5G 개통상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">📡</div>
-    <h2 class="award-name">천국 5G 개통상</h2>
-    <div class="award-reveal">
-      <p class="award-winner">박진</p>
-      <p class="award-description">기도로 중보하는 R45의 기도 용사</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 14. 예수님 붕어빵상 -->
-  <section class="page award-page" data-award>
-    <div class="award-emoji">🏆</div>
-    <h2 class="award-name">예수님 붕어빵상</h2>
-    <div class="award-reveal">
-      <p class="award-winner">김종진</p>
-      <p class="award-description">예배팀 안에서 가장 고마웠던 사람<br>설문 결과 압도적 1위!</p>
-    </div>
-    <p class="award-hint">화면을 클릭하면 수상자가 공개됩니다</p>
-  </section>
-
-  <!-- 15. Gift Exchange -->
-  <section class="page gift-section">
-    <h2 class="gift-title">GIFT EXCHANGE</h2>
-    <p class="gift-subtitle">키워드를 선택하세요 · 클릭하면 메시지가 공개됩니다</p>
-    <div class="bingo-grid" id="bingoGrid">
-      <!-- JS로 생성 -->
+  <!-- Gift Messages -->
+  <section class="gifts-section">
+    <div class="container">
+      <h2 class="section-title fade-in">GIFT EXCHANGE</h2>
+      <div class="gifts-grid" id="giftsGrid"></div>
     </div>
   </section>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-      <button class="modal-close" id="modalClose">✕</button>
-      <p class="modal-keyword" id="modalKeyword"></p>
-      <p class="modal-message" id="modalMessage"></p>
-    </div>
-  </div>
-
-  <!-- 16. Footer -->
-  <section class="page footer-page">
-    <h2 class="footer-logo">R45 RECAP 2025</h2>
-    <div class="footer-dresscode">
-      <span>DRESS CODE: </span>
-      <span class="red">RED</span>
-      <span> & </span>
-      <span class="green">GREEN</span>
-    </div>
-    <p class="footer-tagline">"데이터는 사랑을 싣고"</p>
+  <!-- 2026 -->
+  <section class="next-year" id="nextYear">
+    <p class="next-year-label fade-in">COMING UP NEXT</p>
+    <p class="next-year-number blur-in">2026</p>
+    <h2 class="next-year-slogan scale-in">ALL OR NOTHING</h2>
+    <p class="next-year-sub fade-up">R45 WORSHIP TEAM</p>
   </section>
 
-  </div> <!-- horizontal-container 끝 -->
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-logo">R45 RECAP 2025</p>
+    <p class="footer-dresscode">
+      DRESS CODE: <span class="red">RED</span> & <span class="green">GREEN</span>
+    </p>
+  </footer>
+
+  <!-- BGM -->
+  <audio id="bgm" loop>
+    <source src="https://ijgxyqipwqznlleeurog.supabase.co/storage/v1/object/public/r45/awards.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
-    // Quiz interaction
-    const quizSection = document.getElementById('quizSection');
-    const quizAnswer = document.getElementById('quizAnswer');
-    let quizRevealed = false;
+    // BGM - 스크롤 시작하면 재생
+    const bgm = document.getElementById('bgm');
+    let bgmStarted = false;
 
-    quizSection.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!quizRevealed) {
-        quizAnswer.classList.add('show');
-        quizSection.querySelector('.quiz-hint').style.display = 'none';
-        quizRevealed = true;
+    const startBGM = () => {
+      if (!bgmStarted) {
+        bgm.volume = 0.4;
+        bgm.play();
+        bgmStarted = true;
       }
-    });
+    };
 
-    // Horizontal scroll container
-    const container = document.getElementById('horizontalContainer');
-    const pages = document.querySelectorAll('.page');
-    const pageIndicator = document.getElementById('pageIndicator');
+    window.addEventListener('scroll', startBGM, { once: true });
+    window.addEventListener('touchmove', startBGM, { once: true });
 
-    // Page indicator
-    pages.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.className = 'page-dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', () => {
-        pages[i].scrollIntoView({ behavior: 'smooth', inline: 'start' });
-      });
-      pageIndicator.appendChild(dot);
-    });
-
-    const dots = document.querySelectorAll('.page-dot');
-
-    // Intersection observer for active dot
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const index = Array.from(pages).indexOf(entry.target);
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-          });
-        }
-      });
-    }, { threshold: 0.5, root: container });
-
-    pages.forEach(page => observer.observe(page));
-
-    // Wheel event - 세로 스크롤을 가로로 변환
-    let isScrolling = false;
-    container.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (isScrolling) return;
-      
-      if (Math.abs(e.deltaY) > 10) {
-        isScrolling = true;
-        const currentScroll = container.scrollLeft;
-        const pageWidth = window.innerWidth;
-        const currentPage = Math.round(currentScroll / pageWidth);
-        
-        let targetPage;
-        if (e.deltaY > 0) {
-          targetPage = Math.min(currentPage + 1, pages.length - 1);
-        } else {
-          targetPage = Math.max(currentPage - 1, 0);
-        }
-        
-        pages[targetPage].scrollIntoView({ behavior: 'smooth', inline: 'start' });
-        
-        setTimeout(() => { isScrolling = false; }, 800);
-      }
-    }, { passive: false });
-
-    // Gift data from database
     const giftData = [
-      { name: '전성은', keyword: '겉촉속촉 - 미스트', message: '이 선물은 일산에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 사람에게 기쁨을 주었고 지금은 당신에게로 옮겨진 이 선물은 3개월 안에 당신 곁을 떠나야 합니다. 이 선물이 필요한 R45 팀원에게 꼭 전달해주세요' },
+      { name: '전성은', keyword: '겉촉속촉 - 미스트', message: '이 선물은 일산에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 사람에게 기쁨을 주었고 지금은 당신에게로 옮겨진 이 선물은 3개월 안에 당신 곁을 떠나야 합니다.' },
       { name: '하정인', keyword: '건강함 - 홍삼', message: '2025년 너무 수고 많으셨습니다. 2026년도 영혼육이 강건하시길 기도합니다!! 🤗' },
       { name: '김태완', keyword: '영혼육 - 헬스 스트랩', message: '2026 새시즌을 더욱 힘차게 달려가기위해 감당할수있는 체력을 준비하는 예배팀 되시기를 바라는 마음으로 준비하였습니다' },
       { name: '최재영', keyword: '뒷심 - 비타민', message: '2025 마무리까지 화이팅!' },
       { name: '김종진', keyword: '향기로운 성탄', message: '예수님 탄생의 기쁨이 집안 곳곳에 퍼지길🙏🏻' },
-      { name: '안은영', keyword: '달콤바삭고소', message: '2025년 1년 동안 수고한 당신께 달달한 쿠키 선물드립니다♡ 따뜻한 커피와 함께 맛나게 쿠키 한박스 뿌셔보세요~! GOD BLESS U :)' },
+      { name: '안은영', keyword: '달콤바삭고소', message: '2025년 1년 동안 수고한 당신께 달달한 쿠키 선물드립니다♡ 따뜻한 커피와 함께 맛나게 쿠키 한박스 뿌셔보세요~!' },
       { name: '유희상', keyword: '에너지 - 비타민', message: '무선마이크에 베터리 충전이 필요하듯이 우리 몸에도 비타민으로 에너지 충천을 하기를🙏' },
-      { name: '강호', keyword: '별다방 - 기프트카드', message: '2025년 고생 많으셨습니다.\n2026년에는 소원하는 일과 기도제목들이 이루어질 것을 믿음으로 기도합니다.\n축복합니다- :)' },
-      { name: '김대은', keyword: '연결 - 보조배터리', message: '배터리 2% 빨간색 경고등과 같이 나의 힘이 다해가는 것 같은 순간에도..\n위로부터 부어주시는 새로운 힘과 은혜를 누리는 2026년 되시기를 축복합니다!!!' },
+      { name: '강호', keyword: '별다방 - 기프트카드', message: '2025년 고생 많으셨습니다. 2026년에는 소원하는 일과 기도제목들이 이루어질 것을 믿음으로 기도합니다. 축복합니다- :)' },
+      { name: '김대은', keyword: '연결 - 보조배터리', message: '배터리 2% 빨간색 경고등과 같이 나의 힘이 다해가는 것 같은 순간에도.. 위로부터 부어주시는 새로운 힘과 은혜를 누리는 2026년 되시기를 축복합니다!!!' },
       { name: '김홍석', keyword: '포근함', message: '집을 돌아온 그대의 발바닥이 따뜻하고 포근하도록' },
       { name: '황정경', keyword: '예언적 - 핸드크림', message: '2026년에 예언적인 노래가 더 풀어지길, 하늘문을 여는 예배자가 되길 기도합니다.' },
       { name: '유은혜', keyword: 'Melting', message: '추운 겨울 Melting - Melting 하게 이 친구가 함께해 줄거에오(찡긋)' },
-      { name: '이지희', keyword: '부드러움 - 헤어에센스', message: '2025년 한해 수고많으셨어요~\n2026년에도 하나님나라를 향해 함께 전심전력으로 달려가보아요^^' },
+      { name: '이지희', keyword: '부드러움 - 헤어에센스', message: '2025년 한해 수고많으셨어요~ 2026년에도 하나님나라를 향해 함께 전심전력으로 달려가보아요^^' },
       { name: '박상범', keyword: '휴식과 힐링 - 티박스', message: '따듯한 한잔의 차와 함께 잠시라도 누리는 삶의 여유와 힐링을 경험하시길!! 그 회복을 힘입어 더욱 전심으로 예배합시다!! 샬롬!!' },
-      { name: '박진', keyword: '깨끗함 - 수건', message: '올 한해동안 수고많았어요\n부족한 제가 탁월한, 준비된 예배자 당신과 같이 예배할 수 있어 너무 감사합니다' },
+      { name: '박진', keyword: '깨끗함 - 수건', message: '올 한해동안 수고많았어요. 부족한 제가 탁월한, 준비된 예배자 당신과 같이 예배할 수 있어 너무 감사합니다' },
       { name: '박민욱', keyword: '수혈 - 스타벅스 상품권', message: '따뜻한 커피 한잔으로 행복한 한주 시작하세요😍' },
-      { name: '조수현', keyword: '기름부음 - 멀티오일', message: 'Fresh Anointing! 새로운 기름부음이 부어질것입니다! 예배할때마다 하늘문이 열리고 주님의 영광이 나타날지어다!! 실제적인 치유와 회복이, 돌파가 있을지어다!!' },
+      { name: '조수현', keyword: '기름부음 - 멀티오일', message: 'Fresh Anointing! 새로운 기름부음이 부어질것입니다! 예배할때마다 하늘문이 열리고 주님의 영광이 나타날지어다!!' },
       { name: '김상희', keyword: '앜ㅋㅋㅋㅋㅋ - 프로폴리스', message: '올 겨울 작은 감기에도 걸리지 마시고, 26년에는 영혼육이 더 강건하며 주님의 기름부음과 은총이 흘러 넘치는 예배자로 든든히 서길 진심으로 축복합니다🤍' },
       { name: '서강휘', keyword: '촉촉하고 맑고 자신있게', message: '한 해 동안 수고 많으셨습니다.' },
-      { name: '정요한', keyword: '누나가 골랐어요 - 팩/방향제/과자', message: '한 해동안 수고많으셨습니다!!\n2026년도 완전하신 주님의 일하심을 경험하는 한 해 되시길 간절히 기도합니다!!\n\n작은 선물이지만.. 건강한 피부 되시길, 좋은 향기 많이 나시길, 맛있는거 많이 드시길 바라는 마음에 골라봤습니다🤭🤭' },
+      { name: '정요한', keyword: '누나가 골랐어요 - 팩/방향제/과자', message: '한 해동안 수고많으셨습니다!! 2026년도 완전하신 주님의 일하심을 경험하는 한 해 되시길 간절히 기도합니다!!' },
       { name: '우혜진', keyword: '포근함 - 아이마스크', message: '따뜻하고 포근함을 느끼는 휴식 또는 단잠의 시간이 되시기를 소망합니다!' },
-      { name: '김가영', keyword: '촉촉함 - 핸드크림', message: '힘들어도 무너지지 마시고 항상 지금과 같이 멋있는 예배자가 되시길 너무나 축복합니다!! 이번년도 고생하셨어여~' },
-      { name: '정제인', keyword: 'MUJI 사랑합니다❤️ - 무지 양말, 무지 볼펜, 무지 미니달력, 무지 푸딩만들기', message: '무지 사랑합니다❤️❤️❤️\n올 한해도 너무 수고많으셨습니다!!!\n26년도 내년 한해도 성령충만함으로! 함께 예배를 세우는 예배자들 됩시당 ~~~!' },
+      { name: '김가영', keyword: '촉촉함 - 핸드크림', message: '힘들어도 무너지지 마시고 항상 지금과 같이 멋있는 예배자가 되시길 너무나 축복합니다!!' },
+      { name: '정제인', keyword: 'MUJI 사랑합니다❤️', message: '무지 사랑합니다❤️❤️❤️ 올 한해도 너무 수고많으셨습니다!!! 26년도 내년 한해도 성령충만함으로! 함께 예배를 세우는 예배자들 됩시당 ~~~!' },
       { name: '연지윤', keyword: '보들보들 - 러그', message: '따뜻하고 귀여운 러그 위에서 샬롬한 시간 되세용' },
       { name: '향', keyword: '상쾌함', message: '모든 고민과 걱정거리는 시원하게 날아가 상쾌한 마음이 될것 입니다 할렐루야~~~~' },
       { name: '기대운', keyword: '추억 - 디퓨져', message: '향기는 추억을 담고있는 매개체입니다 항상 이 향을 맡을때마다 하나님과의 좋은 추억을 기억하고 어려움들을 극복하는 사람이 되길 바랍니다' },
@@ -966,53 +982,122 @@
       { name: '김성의', keyword: '맛있음 - 접시', message: '한해동안 순종과 섬김의 마음으로 함께 해주셔서 감사합니다. 축복합니다.~' },
       { name: '김민수', keyword: '블랙자몽티', message: '2025년 한 해 정말 수고 많으셨습니다! 다가오는 2026년에 믿음으로 승리하는 나날이 펼쳐질 것입니다! 샬롬' },
       { name: '지성현', keyword: '깨끗함', message: '26년은 깔끔하게 시작합시다!!ㅋㅋㅋ' },
-      { name: '김수아', keyword: '촉촉함 - 핸드크림, 립밤', message: '촉촉하고 따뜻한 연말 연초 보내세요 🍀 올 한해도 수고한 예배자에게.. 격려와 응원 마구마구 보냅니다! 🙏🏻 내년에도 성령충만 같이 달려보아요 💪🏻' }
+      { name: '김수아', keyword: '촉촉함 - 핸드크림, 립밤', message: '촉촉하고 따뜻한 연말 연초 보내세요 🍀 올 한해도 수고한 예배자에게.. 격려와 응원 마구마구 보냅니다! 🙏🏻' },
+      { name: '장준하', keyword: '건강함 - 종합비타민', message: '바쁜 연말 연시 건강하십시오!!' },
+      { name: '백인영', keyword: '아주흔한', message: '제일 잘 써지는 것으로 골랐습니당' }
     ];
 
-    const bingoGrid = document.getElementById('bingoGrid');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalKeyword = document.getElementById('modalKeyword');
-    const modalMessage = document.getElementById('modalMessage');
-    const modalClose = document.getElementById('modalClose');
-
-    giftData.forEach(gift => {
-      const cell = document.createElement('div');
-      cell.className = 'bingo-cell';
-      cell.textContent = gift.keyword.split(' - ')[0]; // 키워드만 표시
-      cell.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // 모달 열기
-        modalKeyword.textContent = gift.keyword;
-        modalMessage.textContent = gift.message;
-        modalOverlay.classList.add('show');
-        cell.classList.add('selected');
-      });
-      bingoGrid.appendChild(cell);
+    const giftsGrid = document.getElementById('giftsGrid');
+    giftData.forEach((gift, index) => {
+      const card = document.createElement('div');
+      card.className = 'gift-card';
+      card.style.transitionDelay = `${index * 0.08}s`;
+      card.innerHTML = `
+        <p class="gift-keyword">${gift.keyword}</p>
+        <p class="gift-name">from. ${gift.name}</p>
+        <p class="gift-message">${gift.message}</p>
+      `;
+      giftsGrid.appendChild(card);
     });
 
-    // 모달 닫기
-    modalClose.addEventListener('click', (e) => {
-      e.stopPropagation();
-      modalOverlay.classList.remove('show');
-    });
+    // Scroll Animation Observer - Noomo Style
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
 
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) {
-        modalOverlay.classList.remove('show');
-      }
-    });
-
-    // Award pages - 클릭하면 수상자 공개
-    const awardPages = document.querySelectorAll('.award-page[data-award]');
-    awardPages.forEach(page => {
-      page.addEventListener('click', (e) => {
-        if (!page.classList.contains('revealed')) {
-          e.stopPropagation();
-          page.classList.add('revealed');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
+      });
+    }, observerOptions);
+
+    // 모든 애니메이션 대상 요소 관찰
+    document.querySelectorAll('.fade-up, .fade-in, .fade-left, .fade-right, .scale-in, .blur-in, .rotate-in, .reveal, .stagger-children, .gift-card').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Cursor glow effect
+    const cursorGlow = document.createElement('div');
+    cursorGlow.className = 'cursor-glow';
+    document.body.appendChild(cursorGlow);
+
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorGlow.classList.add('active');
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.classList.remove('active');
+    });
+
+    // Smooth cursor follow
+    function animateCursor() {
+      glowX += (mouseX - glowX) * 0.1;
+      glowY += (mouseY - glowY) * 0.1;
+      cursorGlow.style.left = glowX + 'px';
+      cursorGlow.style.top = glowY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Magnetic effect for award cards
+    document.querySelectorAll('.award-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        card.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // Smooth scroll progress indicator
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), var(--green));
+      z-index: 9999;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.1s ease-out;
+    `;
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTop / docHeight;
+      progressBar.style.transform = `scaleX(${progress})`;
+    });
+
+    // Tilt effect on gift cards
+    document.querySelectorAll('.gift-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const tiltX = (y - 0.5) * 10;
+        const tiltY = (x - 0.5) * -10;
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-5px)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
       });
     });
   </script>
-
 </body>
 </html>
